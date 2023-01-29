@@ -39,9 +39,9 @@ public class bananalysis {
         bananaR /= counter;
 
         System.out.println("Red: " + bananaR + "\n Blue: " + bananaB + "\n Green: " + bananaG);
-        int underScore = (Math.abs(bananaR - 125)) + (Math.abs(bananaB - 114)) + (Math.abs(bananaG - 190));
+        int underScore = (Math.abs(bananaR - 175)) + (Math.abs(bananaB - 114)) + (Math.abs(bananaG - 190));
         int barelyScore = (Math.abs(bananaR - 187) + (Math.abs(bananaB - 110)) + Math.abs(bananaG - 185));
-        int ripeScore = Math.abs(bananaR - 214) + Math.abs(bananaB - 68) + Math.abs(bananaG - 185);
+        int ripeScore = Math.abs(bananaR - 214) + Math.abs(bananaB - 68) + Math.abs(bananaG - 155);
         int veryScore = Math.abs(bananaR - 182) + Math.abs(bananaB - 66) + Math.abs(bananaG - 131);
         int overScore = Math.abs(bananaR - 65) + Math.abs(bananaB - 29) + Math.abs(bananaG - 45);
         int[] scores = {underScore, barelyScore, ripeScore, veryScore, overScore};

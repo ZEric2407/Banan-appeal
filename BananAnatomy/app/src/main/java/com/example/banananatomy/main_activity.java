@@ -7,8 +7,13 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -21,7 +26,7 @@ import java.io.IOException;
 
 public class main_activity extends AppCompatActivity {
 
-    Button ImageSelectorButton;
+    ImageButton ImageSelectorButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +39,7 @@ public class main_activity extends AppCompatActivity {
             }
         });
 
-        Button camera = (Button)findViewById(R.id.cameraButton);
+        ImageButton camera = (ImageButton)findViewById(R.id.cameraButton);
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,14 +100,39 @@ public class main_activity extends AppCompatActivity {
         System.out.println(bananaScore);
         if (bananaScore == 0){
             Toast.makeText(this, "Underripe", Toast.LENGTH_SHORT).show();
+            showPopup(0);
         } else if (bananaScore == 1){
             Toast.makeText(this, "Barely Ripe", Toast.LENGTH_SHORT).show();
+            showPopup(1);
         } else if (bananaScore == 2){
-            Toast.makeText(this, "Ripe", Toast.LENGTH_SHORT).show();;
+            Toast.makeText(this, "Ripe", Toast.LENGTH_SHORT).show();
+            showPopup(2);
         } else if (bananaScore == 3){
             Toast.makeText(this, "Very Ripe", Toast.LENGTH_SHORT).show();
+            showPopup(3);
         } else {
             Toast.makeText(this, "Overripe", Toast.LENGTH_SHORT).show();
+            showPopup(4);
         }
+    }
+
+    public void showPopup(int i){
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View[] popupViews = {inflater.inflate(R.layout.popup0, null), inflater.inflate(R.layout.popup1, null),
+                inflater.inflate(R.layout.popup2, null), inflater.inflate(R.layout.popup3, null), inflater.inflate(R.layout.popup4, null)};
+        View popupView = popupViews[i];
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        boolean focusable = true;
+        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+        popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
+
+        popupView.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                popupWindow.dismiss();
+                return true;
+            }
+        });
     }
 }
