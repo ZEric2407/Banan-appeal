@@ -39,7 +39,7 @@ public class main_activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startIntent = new Intent("android.media.action.IMAGE_CAPTURE");
-                startActivity(startIntent);
+                startActivityForResult(startIntent, 123);
             }
         });
 
@@ -71,21 +71,7 @@ public class main_activity extends AppCompatActivity {
                         Bitmap selectedImageBitmap;
                         try {
                             selectedImageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageURL);
-                            bananalysis bananalyzer = new bananalysis();
-                            int bananaScore = bananalyzer.analyzeBanana(selectedImageBitmap);
-                            System.out.println(bananaScore);
-                            if (bananaScore == 0){
-                                Toast.makeText(this, "Underripe", Toast.LENGTH_SHORT).show();
-                            } else if (bananaScore == 1){
-                                Toast.makeText(this, "Barely Ripe", Toast.LENGTH_SHORT).show();
-                            } else if (bananaScore == 2){
-                                Toast.makeText(this, "Ripe", Toast.LENGTH_SHORT).show();;
-                            } else if (bananaScore == 3){
-                                Toast.makeText(this, "Very Ripe", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(this, "Overripe", Toast.LENGTH_SHORT).show();
-                            }
-
+                            processBitmap(selectedImageBitmap);
                         }
                         catch (IOException e){
                             e.printStackTrace();
@@ -94,4 +80,29 @@ public class main_activity extends AppCompatActivity {
 
                 }
             });
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 123) {
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            processBitmap(photo);
+        }
+    }
+
+    protected void processBitmap(Bitmap bitmap){
+        bananalysis bananalyzer = new bananalysis();
+        int bananaScore = bananalyzer.analyzeBanana(bitmap);
+        System.out.println(bananaScore);
+        if (bananaScore == 0){
+            Toast.makeText(this, "Underripe", Toast.LENGTH_SHORT).show();
+        } else if (bananaScore == 1){
+            Toast.makeText(this, "Barely Ripe", Toast.LENGTH_SHORT).show();
+        } else if (bananaScore == 2){
+            Toast.makeText(this, "Ripe", Toast.LENGTH_SHORT).show();;
+        } else if (bananaScore == 3){
+            Toast.makeText(this, "Very Ripe", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Overripe", Toast.LENGTH_SHORT).show();
+        }
+    }
 }
