@@ -1,25 +1,12 @@
 package com.example.banananatomy;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 
 
 public class bananalysis {
 
-    public static int convertToPGM(String path) {
-        try {
-            FileInputStream inputStream = new FileInputStream(path);
-            FileOutputStream outputStream;
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        Bitmap bitmap = BitmapFactory.decodeFile(path);
+    public static int analyzeBanana(Bitmap bitmap) {
 
         int mapWidth = bitmap.getWidth();
         int mapHeight = bitmap.getHeight();
@@ -39,7 +26,7 @@ public class bananalysis {
             if ((pixelR <= 255 && pixelR >= 140 &&
                     pixelB <= 110 && pixelB >= 0 &&
                     pixelG <= 255 && pixelG >= 160) ||
-                    (pixelR <= 255 && pixelR >= 220 && pixelB <= 255 && pixelB >= 220 && pixelG <= 255 && pixelG >= 220)){
+                    (pixelR <= 60 && pixelR >= 0 && pixelB <= 60 && pixelB >= 0 && pixelG <= 60 && pixelG >= 0)){
                 bananaR += pixelR;
                 bananaB += pixelB;
                 bananaG += pixelG;
@@ -52,8 +39,8 @@ public class bananalysis {
         bananaR /= counter;
 
         System.out.println("Red: " + bananaR + "\n Blue: " + bananaB + "\n Green: " + bananaG);
-        int underScore = (Math.abs(bananaR - 215)) + (Math.abs(bananaB - 114)) + (Math.abs(bananaG - 210));
-        int barelyScore = (Math.abs(bananaR - 237) + (Math.abs(bananaB - 110)) + Math.abs(bananaG - 227));
+        int underScore = (Math.abs(bananaR - 125)) + (Math.abs(bananaB - 114)) + (Math.abs(bananaG - 190));
+        int barelyScore = (Math.abs(bananaR - 187) + (Math.abs(bananaB - 110)) + Math.abs(bananaG - 185));
         int ripeScore = Math.abs(bananaR - 214) + Math.abs(bananaB - 68) + Math.abs(bananaG - 185);
         int veryScore = Math.abs(bananaR - 182) + Math.abs(bananaB - 66) + Math.abs(bananaG - 131);
         int overScore = Math.abs(bananaR - 65) + Math.abs(bananaB - 29) + Math.abs(bananaG - 45);
